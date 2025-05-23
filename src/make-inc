@@ -1,0 +1,37 @@
+#
+# gnu-linux-xlib-game-dev					May 23, 2025
+#
+# source: src/make-inc
+# author: @misael-diaz
+#
+# Synopsis:
+# Defines the include file for building the program with GNU make.
+#
+# Copyright (c) 2025 Misael Diaz-Maldonado
+#
+# This file is released under the GNU General Public License version 2 only
+# as published by the Free Software Foundation.
+#
+
+SYSTEM_H = system.h
+INPUT_H = input.h
+VIDEO_H = video.h
+ENTITY_H = entity.h
+GMDEFS_H = gmdefs.h
+GAME_H = game.h
+
+SYSTEM_SRC = system.c
+INPUT_SRC = input.c
+VIDEO_SRC = video.c
+ENTITY_SRC = entity.c
+GAME_SRC = game.c
+MAIN_SRC = main.c
+
+SYSTEM_OBJ = ../obj/system.o
+INPUT_OBJ = ../obj/input.o
+VIDEO_OBJ = ../obj/video.o
+ENTITY_OBJ = ../obj/entity.o
+GAME_OBJ = ../obj/game.o
+MAIN_OBJ = ../obj/main.o
+
+BIN = ../bin/game.bin
