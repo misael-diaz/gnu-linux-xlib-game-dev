@@ -1,7 +1,12 @@
 # gnu-linux-xlib-game-dev
 game-dev with xlib for GNU/Linux
 
-# References
+## Motivation
+
+My drive is not to build a game because I like games but to build a game because I
+want to get the experience of writing code in an area outside of my field of expertise.
+
+## References
 
 We are using the [Xlib Programming Manual](https://tronche.com/gui/x/xlib/) as our main
 source of information for building this game and of course the GNU/Linux man pages.
