@@ -1,5 +1,5 @@
-# gnu-linux-xlib-game-dev
-game-dev with xlib for GNU/Linux
+# GNU/Linux Xlib Game Dev
+Game development with xlib for GNU/Linux.
 
 ## Motivation
 
