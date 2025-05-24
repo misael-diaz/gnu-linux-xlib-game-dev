@@ -72,9 +72,9 @@ static void en_fix_overlap(
 
 void en_init(
 		struct entity * const entities,
+		int const num_entities,
 		int const width_game_window,
-		int const height_game_window,
-		int const num_entities
+		int const height_game_window
 )
 {
 	if ((0 >= num_entities) || (EN_NUM_ENTITY_MAX < num_entities)) {
@@ -247,13 +247,14 @@ void en_handle_collisions(
 
 void en_update(
 		struct entity * const entities,
-		int num_entities
+		int const num_entities,
+		float const time_step
 )
 {
 	for (int i = 0; i != num_entities; ++i) {
 		struct entity * const ent = &entities[i];
-		ent->xpos += ent->xvel;
-		ent->ypos += ent->yvel;
+		ent->xpos += (time_step * ent->xvel);
+		ent->ypos += (time_step * ent->yvel);
 		ent->xpos = ((ent->xmin > ent->xpos)? ent->xmin : ent->xpos);
 		ent->xpos = ((ent->xmax < ent->xpos)? ent->xmax : ent->xpos);
 		ent->ypos = ((ent->ymin > ent->ypos)? ent->ymin : ent->ypos);

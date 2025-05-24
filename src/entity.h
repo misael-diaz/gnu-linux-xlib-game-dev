@@ -111,7 +111,8 @@ void en_init(
 
 void en_update(
 		struct entity * const entities,
-		int num_entities
+		int const num_entities,
+		float const time_step
 );
 
 void en_handle_collisions(
