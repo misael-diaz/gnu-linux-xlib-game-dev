@@ -72,8 +72,8 @@ static void en_fix_overlap(
 
 void en_init(
 		struct entity * const entities,
-		int const xres,
-		int const yres,
+		int const width_game_window,
+		int const height_game_window,
 		int const num_entities
 )
 {
@@ -104,8 +104,8 @@ void en_init(
 			ent->yvel = 0;
 			ent->xmin = 0;
 			ent->ymin = 0;
-			ent->xmax = (xres - hud_width);
-			ent->ymax = (yres - hud_height);
+			ent->xmax = (width_game_window - hud_width);
+			ent->ymax = (height_game_window - hud_height);
 			ent->blue  = EN_HUD_BLUE;
 			ent->green = EN_HUD_GREEN;
 			ent->red   = EN_HUD_RED;
@@ -118,14 +118,14 @@ void en_init(
 			ent->tag = EN_GAMER;
 			ent->invisibility = 0;
 			ent->ticks = 0;
-			ent->xpos = ((xres >> 1) - (gamer_len >> 1));
-			ent->ypos = ((yres >> 1) - (gamer_len >> 1));
+			ent->xpos = ((width_game_window >> 1) - (gamer_len >> 1));
+			ent->ypos = ((height_game_window >> 1) - (gamer_len >> 1));
 			ent->xvel = 0;
 			ent->yvel = 0;
 			ent->xmin = 0;
 			ent->ymin = 0;
-			ent->xmax = (xres - gamer_len);
-			ent->ymax = (yres - gamer_len);
+			ent->xmax = (width_game_window - gamer_len);
+			ent->ymax = (height_game_window - gamer_len);
 			ent->blue  = EN_GAMER_BLUE;
 			ent->green = EN_GAMER_GREEN;
 			ent->red   = EN_GAMER_RED;
@@ -138,8 +138,8 @@ void en_init(
 			ent->tag = EN_ENEMY;
 			ent->invisibility = 0;
 			ent->ticks = 0;
-			ent->xpos = sys_random(0, xres);
-			ent->ypos = sys_random(0, yres);
+			ent->xpos = sys_random(0, width_game_window);
+			ent->ypos = sys_random(0, height_game_window);
 			ent->xvel = sys_random(-EN_ENEMY_VEL, EN_ENEMY_VEL);
 			ent->yvel = sys_random(-EN_ENEMY_VEL, EN_ENEMY_VEL);
 			ent->xvel = en_clamp(ent->xvel,-EN_ENEMY_MAXVEL,-EN_ENEMY_MINVEL);
@@ -148,8 +148,8 @@ void en_init(
 			ent->yvel = en_clamp(ent->yvel, EN_ENEMY_MINVEL, EN_ENEMY_MAXVEL);
 			ent->xmin = 0;
 			ent->ymin = 0;
-			ent->xmax = (xres - enemy_len);
-			ent->ymax = (yres - enemy_len);
+			ent->xmax = (width_game_window - enemy_len);
+			ent->ymax = (height_game_window - enemy_len);
 			ent->blue  = EN_ENEMY_BLUE;
 			ent->green = EN_ENEMY_GREEN;
 			ent->red   = EN_ENEMY_RED;
@@ -165,8 +165,8 @@ void en_init(
 	en_fix_overlap(entities, num_entities);
 	for (int i = 0; i != num_entities; ++i) {
 		struct entity * const ent = &entities[i];
-		ent->xpos = en_clamp(ent->xpos, 0, xres);
-		ent->ypos = en_clamp(ent->ypos, 0, yres);
+		ent->xpos = en_clamp(ent->xpos, 0, width_game_window);
+		ent->ypos = en_clamp(ent->ypos, 0, height_game_window);
 	}
 }
 

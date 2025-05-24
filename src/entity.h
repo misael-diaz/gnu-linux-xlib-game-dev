@@ -105,8 +105,8 @@ struct entity {
 void en_init(
 		struct entity * const entities,
 		int const num_entities,
-		int const xres,
-		int const yres
+		int const width_game_window,
+		int const height_game_window
 );
 
 void en_update(
