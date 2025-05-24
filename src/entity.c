@@ -255,10 +255,8 @@ void en_update(
 		struct entity * const ent = &entities[i];
 		ent->xpos += (time_step * ent->xvel);
 		ent->ypos += (time_step * ent->yvel);
-		ent->xpos = ((ent->xmin > ent->xpos)? ent->xmin : ent->xpos);
-		ent->xpos = ((ent->xmax < ent->xpos)? ent->xmax : ent->xpos);
-		ent->ypos = ((ent->ymin > ent->ypos)? ent->ymin : ent->ypos);
-		ent->ypos = ((ent->ymax < ent->ypos)? ent->ymax : ent->ypos);
+		ent->xpos = en_clamp(ent->xpos, ent->xmin, ent->xmax);
+		ent->ypos = en_clamp(ent->ypos, ent->ymin, ent->ymax);
 		if (EN_ENEMY == ent->tag) {
 			if ((ent->xmin == ent->xpos) || (ent->xmax == ent->xpos)) {
 				ent->xvel = -ent->xvel;
