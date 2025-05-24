@@ -15,6 +15,7 @@ void vid_init_gw(
 		fprintf(stderr, "%s\n", "vid_info_gw: XOpenDisplayError");
 		exit(EXIT_FAILURE);
 	}
+	XEvent ev = {};
 	int const x = 0;
 	int const y = 0;
 	int const border_width = 0;
@@ -43,7 +44,6 @@ void vid_init_gw(
 	GC gc = DefaultGC(*display, screeno);
 	XSetGraphicsExposures(*display, gc, True);
 	XMapWindow(*display, *window);
-	XEvent ev = {};
 	XWindowEvent(*display, *window, ExposureMask, &ev);
 }
 
