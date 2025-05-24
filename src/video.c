@@ -22,7 +22,9 @@ void vid_init_gw(
 	int const screeno = DefaultScreen(*display);
 	Screen *screen = DefaultScreenOfDisplay(*display);
 	XSetWindowAttributes attributes_window = {
-		.background_pixel = BlackPixel(*display, screeno)
+		.background_pixel = BlackPixel(*display, screeno),
+		.event_mask = ExposureMask
+
 	};
 	*window = XCreateWindow(
 			*display,
@@ -35,12 +37,11 @@ void vid_init_gw(
 			DefaultDepthOfScreen(screen),
 			input_output_class,
 			DefaultVisual(*display, screeno),
-			CWBackPixel,
+			CWBackPixel | CWEventMask,
 			&attributes_window
 	);
 	GC gc = DefaultGC(*display, screeno);
 	XSetGraphicsExposures(*display, gc, True);
-	XSelectInput(*display, *window, ExposureMask);
 	XMapWindow(*display, *window);
 	XEvent ev = {};
 	XWindowEvent(*display, *window, ExposureMask, &ev);
