@@ -2,6 +2,7 @@
 #define GNU_LINUX_XLIB_GAME_DEV_GAME_H
 
 void g_loop(void);
+void g_pause(void);
 
 #endif
 

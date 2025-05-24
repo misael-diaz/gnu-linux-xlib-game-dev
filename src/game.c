@@ -8,6 +8,13 @@ void g_loop(void)
 	return;
 }
 
+void g_pause(void)
+{
+	char c = 0;
+	fprintf(stdout, "g_pause: Press Any Key To Continue\n");
+	fread(&c, sizeof(c), 1, stdin);
+}
+
 /*
 
 gnu-linux-xlib-game-dev                                          May 23, 2025

@@ -23,6 +23,9 @@ int main ()
 			WidthOfScreen(DefaultScreenOfDisplay(display)),
 			HeightOfScreen(DefaultScreenOfDisplay(display))
 	);
+	vid_draw_gw(&display, &window, ents, num_entities);
+	XFlush(display);
+	g_pause();
 	vid_close_gw(&display, &window);
 	return 0;
 }

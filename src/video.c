@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include "entity.h"
 #include "video.h"
 
 void vid_init_gw(
@@ -37,6 +38,12 @@ void vid_init_gw(
 			CWBackPixel,
 			&attributes_window
 	);
+	GC gc = DefaultGC(*display, screeno);
+	XSetGraphicsExposures(*display, gc, True);
+	XSelectInput(*display, *window, ExposureMask);
+	XMapWindow(*display, *window);
+	XEvent ev = {};
+	XWindowEvent(*display, *window, ExposureMask, &ev);
 }
 
 void vid_info_gw(
@@ -73,6 +80,69 @@ void vid_info_gw(
 	fprintf(stdout, "vid_init_gw: max-num-colormaps: %d\n", MaxCmapsOfScreen(scr));
 	fprintf(stdout, "vid_init_gw: min-num-colormaps: %d\n", MinCmapsOfScreen(scr));
 
+}
+
+void vid_draw_gw(
+		Display ** const display,
+		Window * const window,
+		struct entity const * const entities,
+		int const num_entities
+)
+{
+	int const screeno = DefaultScreen(*display);
+	GC gc = DefaultGC(*display, screeno);
+
+	Colormap colormap = DefaultColormap(*display, screeno);
+	XColor red = {};
+	XColor screen_red = {};
+	XColor green = {};
+	XColor screen_green = {};
+	XColor blue = {};
+	XColor screen_blue = {};
+	XAllocNamedColor(
+			*display,
+			colormap,
+			"red",
+			&screen_red,
+			&red
+	);
+	XAllocNamedColor(
+			*display,
+			colormap,
+			"green",
+			&screen_green,
+			&green
+	);
+	XAllocNamedColor(
+			*display,
+			colormap,
+			"blue",
+			&screen_blue,
+			&blue
+	);
+
+	for (int i = 0; i != num_entities; ++i) {
+		struct entity const * const ent = &entities[i];
+		if (EN_GAMER == ent->tag) {
+			XSetForeground(*display, gc, blue.pixel);
+		} else if (EN_ENEMY == ent->tag) {
+			XSetForeground(*display, gc, red.pixel);
+		} else if (EN_HUD == ent->tag) {
+			XSetForeground(*display, gc, green.pixel);
+		} else {
+			XSetForeground(*display, gc, WhitePixel(*display, screeno));
+		}
+		XFillRectangle(
+				*display,
+				*window,
+				gc,
+				ent->xpos,
+				ent->ypos,
+				ent->width,
+				ent->height
+			      );
+	}
+	XFlush(*display);
 }
 
 void vid_close_gw(
