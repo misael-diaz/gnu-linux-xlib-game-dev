@@ -12,13 +12,13 @@
 #define KBD_DOWN XKeysymToKeycode(dpy, XK_Down)
 #define KBD_UP XKeysymToKeycode(dpy, XK_Up)
 
-int in_handle_input(Display ** const display)
+int in_handle_input(struct game * const g)
 {
-	Display *dpy = *display;
 	int rc = 0;
 	XEvent ev = {};
-	while (XPending(*display)) {
-		XNextEvent(*display, &ev);
+	Display *dpy = g->display;
+	while (XPending(g->display)) {
+		XNextEvent(g->display, &ev);
 		if (KeyPress == ev.type) {
 			if (KBD_ESC == ev.xkey.keycode) {
 				rc = 1;

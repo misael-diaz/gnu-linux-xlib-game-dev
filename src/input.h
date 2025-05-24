@@ -1,9 +1,9 @@
 #ifndef GNU_LINUX_XLIB_GAME_DEV_INPUT_H
 #define GNU_LINUX_XLIB_GAME_DEV_INPUT_H
 
-#include <X11/Xlib.h>
+#include "game.h"
 
-int in_handle_input(Display ** const display);
+int in_handle_input(struct game * const g);
 
 #endif
 
