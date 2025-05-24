@@ -25,22 +25,54 @@ int in_handle_input(struct game * const g)
 				break;
 			} else if (KBD_LEFT == ev.xkey.keycode) {
 				fprintf(stdout, "%s\n", "left-key pressed");
+				struct entity * const gamer = &g->ents[EN_GAMER_ID];
+				gamer->xvel = -EN_GAMER_XVEL;
+				rc = 0;
+				break;
 			} else if (KBD_RIGHT == ev.xkey.keycode) {
 				fprintf(stdout, "%s\n", "right-key pressed");
+				struct entity * const gamer = &g->ents[EN_GAMER_ID];
+				gamer->xvel = EN_GAMER_XVEL;
+				rc = 0;
+				break;
 			} else if (KBD_DOWN == ev.xkey.keycode) {
 				fprintf(stdout, "%s\n", "down-key pressed");
+				struct entity * const gamer = &g->ents[EN_GAMER_ID];
+				gamer->yvel = EN_GAMER_YVEL;
+				rc = 0;
+				break;
 			} else if (KBD_UP == ev.xkey.keycode) {
 				fprintf(stdout, "%s\n", "up-key pressed");
+				struct entity * const gamer = &g->ents[EN_GAMER_ID];
+				gamer->yvel = -EN_GAMER_YVEL;
+				rc = 0;
+				break;
 			}
 		} else if (KeyRelease == ev.type) {
 			if (KBD_LEFT == ev.xkey.keycode) {
 				fprintf(stdout, "%s\n", "left-key released");
+				struct entity * const gamer = &g->ents[EN_GAMER_ID];
+				gamer->xvel = 0;
+				rc = 0;
+				break;
 			} else if (KBD_RIGHT == ev.xkey.keycode) {
 				fprintf(stdout, "%s\n", "right-key released");
+				struct entity * const gamer = &g->ents[EN_GAMER_ID];
+				gamer->xvel = 0;
+				rc = 0;
+				break;
 			} else if (KBD_DOWN == ev.xkey.keycode) {
 				fprintf(stdout, "%s\n", "down-key released");
+				struct entity * const gamer = &g->ents[EN_GAMER_ID];
+				gamer->yvel = 0;
+				rc = 0;
+				break;
 			} else if (KBD_UP == ev.xkey.keycode) {
 				fprintf(stdout, "%s\n", "up-key released");
+				struct entity * const gamer = &g->ents[EN_GAMER_ID];
+				gamer->yvel = 0;
+				rc = 0;
+				break;
 			}
 		}
 	}
