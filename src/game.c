@@ -2,15 +2,24 @@
 #include <stdlib.h>
 #include <time.h>
 #include "input.h"
+#include "system.h"
 #include "game.h"
 
 void g_loop(struct game * const g)
 {
+	struct timespec time_game_start = {};
+	struct timespec time_game_end = {};
+	clockid_t clockid = CLOCK_MONOTONIC;
+	float etime = 0;
+	clock_gettime(clockid, &time_game_start);
 	while (1) {
 		if (in_handle_input(g)) {
 			break;
 		}
 	}
+	clock_gettime(clockid, &time_game_end);
+	etime = sys_etime(&time_game_end, &time_game_start);
+	fprintf(stdout, "g_loop: game-duration: %f sec\n", etime);
 }
 
 void g_pause(struct game const * const g)
