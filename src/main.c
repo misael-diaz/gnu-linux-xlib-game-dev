@@ -17,6 +17,12 @@ int main ()
 	sys_init_random();
 	vid_init_gw(&display, &window);
 	vid_info_gw(&display);
+	en_init(
+			ents,
+			num_entities,
+			WidthOfScreen(DefaultScreenOfDisplay(display)),
+			HeightOfScreen(DefaultScreenOfDisplay(display))
+	);
 	vid_close_gw(&display, &window);
 	return 0;
 }
