@@ -8,13 +8,33 @@
 void g_loop(struct game * const g)
 {
 	struct timespec time_game_start = {};
+	struct timespec time_stat_start = {};
+	struct timespec time_frame_start = {};
 	struct timespec time_game_end = {};
+	struct timespec time_stat_end = {};
+	struct timespec time_frame_current = {};
 	clockid_t clockid = CLOCK_MONOTONIC;
+	int const frame_stat_count_max = 64;
 	float etime = 0;
+	float fps = 0;
+	int frame_stat_count = 0;
 	clock_gettime(clockid, &time_game_start);
+	time_stat_start = time_game_start;
 	while (1) {
+		clock_gettime(clockid, &time_frame_start);
 		if (in_handle_input(g)) {
 			break;
+		}
+		++frame_stat_count;
+		clock_gettime(clockid, &time_frame_current);
+		sys_delay(clockid, &time_frame_current);
+		if (frame_stat_count_max == frame_stat_count) {
+			clock_gettime(clockid, &time_stat_end);
+			etime = sys_etime(&time_stat_end, &time_stat_start);
+			fps = (frame_stat_count_max / etime);
+			fprintf(stdout, "g_loop: fps: %f\n", fps);
+			frame_stat_count = 0;
+			time_stat_start = time_stat_end;
 		}
 	}
 	clock_gettime(clockid, &time_game_end);
