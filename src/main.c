@@ -10,23 +10,32 @@
 
 int main ()
 {
-	Display *display = NULL;
-	Window window = {};
-	struct entity ents[EN_NUM_ENTITY_MAX] = {};
-	int num_entities = EN_NUM_ENTITY_MAX;
+	struct game g = {
+		.ents = {},
+		.display = NULL,
+		.window = 0,
+		.screen = NULL,
+		.visual = NULL,
+		.colormap = 0,
+		.red = {},
+		.green = {},
+		.blue = {},
+		.gray = {},
+		.gc = 0,
+		.screen_width = 0,
+		.screen_height = 0,
+		.screen_depth = 0,
+		.screeno = 0,
+		.entno = EN_NUM_ENTITY_MAX
+	};
 	sys_init_random();
-	vid_init_gw(&display, &window);
-	vid_info_gw(&display);
-	en_init(
-			ents,
-			num_entities,
-			WidthOfScreen(DefaultScreenOfDisplay(display)),
-			HeightOfScreen(DefaultScreenOfDisplay(display))
-	);
-	vid_draw_gw(&display, &window, ents, num_entities);
-	g_loop(&display);
-	g_pause();
-	vid_close_gw(&display, &window);
+	vid_init_gw(&g);
+	vid_info_gw(&g);
+	en_init(&g);
+	vid_draw_gw(&g);
+	g_loop(&g);
+	g_pause(&g);
+	vid_close_gw(&g);
 	return 0;
 }
 

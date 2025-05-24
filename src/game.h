@@ -2,9 +2,29 @@
 #define GNU_LINUX_XLIB_GAME_DEV_GAME_H
 
 #include <X11/Xlib.h>
+#include "entdefs.h"
 
-void g_loop(Display ** const display);
-void g_pause(void);
+struct game {
+	struct entity ents[EN_NUM_ENTITY_MAX];
+	Display *display;
+	Window window;
+	Screen *screen;
+	Visual *visual;
+	Colormap colormap;
+	XColor red;
+	XColor green;
+	XColor blue;
+	XColor gray;
+	GC gc;
+	int screen_width;
+	int screen_height;
+	int screen_depth;
+	int screeno;
+	int entno;
+};
+
+void g_loop(struct game * const g);
+void g_pause(struct game const * const g);
 
 #endif
 

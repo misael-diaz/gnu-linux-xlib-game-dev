@@ -2,6 +2,7 @@
 #define GNU_LINUX_XLIB_GAME_DEV_GAME_DEFS_H
 
 #define GAME_FRAMERATE_HZ 60.0f
+#define GAME_PERIOD_SEC (1.0f / GAME_FRAMERATE_HZ)
 #define GAME_PERIOD_NS ((1.0e9f * (1.0f / GAME_FRAMERATE_HZ)))
 #define GAME_PERIOD_NS_I64 ((long) GAME_PERIOD_NS)
 _Static_assert(8 == sizeof(long), "UXLongIntSizeError");

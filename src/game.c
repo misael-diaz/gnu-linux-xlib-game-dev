@@ -4,16 +4,16 @@
 #include "input.h"
 #include "game.h"
 
-void g_loop(Display ** const display)
+void g_loop(struct game * const g)
 {
 	while (1) {
-		if (in_handle_input(display)) {
+		if (in_handle_input(g)) {
 			break;
 		}
 	}
 }
 
-void g_pause(void)
+void g_pause(struct game const * const g)
 {
 	char c = 0;
 	fprintf(stdout, "g_pause: Press Any Key To Continue\n");

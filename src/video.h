@@ -1,26 +1,12 @@
 #ifndef GNU_LINUX_XLIB_GAME_DEV_VIDEO_H
 #define GNU_LINUX_XLIB_GAME_DEV_VIDEO_H
 
-#include <X11/Xlib.h>
-#include "entity.h"
+#include "game.h"
 
-void vid_init_gw(
-		Display ** const display,
-		Window * const window
-);
-void vid_info_gw(Display ** const display);
-
-void vid_draw_gw(
-		Display ** const display,
-		Window * const window,
-		struct entity const * const entities,
-		int const num_entities
-);
-
-void vid_close_gw(
-		Display ** const display,
-		Window * const window
-);
+void vid_init_gw(struct game * const g);
+void vid_info_gw(struct game const * const g);
+void vid_draw_gw(struct game const * const g);
+void vid_close_gw(struct game * const g);
 
 #endif
 

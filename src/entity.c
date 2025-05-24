@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "game.h"
 #include "system.h"
 #include "entity.h"
 
@@ -70,19 +71,10 @@ static void en_fix_overlap(
 	}
 }
 
-void en_init(
-		struct entity * const entities,
-		int const num_entities,
-		int const width_game_window,
-		int const height_game_window
-)
+void en_init(struct game * const g)
 {
-	if ((0 >= num_entities) || (EN_NUM_ENTITY_MAX < num_entities)) {
+	if ((0 >= g->entno) || (EN_NUM_ENTITY_MAX < g->entno)) {
 		fprintf(stderr, "%s\n", "en_init: InvalidEntityCount");
-		_Exit(EXIT_FAILURE);
-	}
-	if (!entities) {
-		fprintf(stderr, "%s\n", "en_init: NullEntityArrayError");
 		_Exit(EXIT_FAILURE);
 	}
 	int const gamer_len = EN_GAMER_LEN;
@@ -92,7 +84,10 @@ void en_init(
 	int const hud_height = EN_HUD_HEIGHT;
 	float const hud_xpos = EN_HUD_XPOS;
 	float const hud_ypos = EN_HUD_YPOS;
-	for (int i = 0; i != num_entities; ++i) {
+	float const width_game_window = g->screen_width;
+	float const height_game_window = g->screen_height;
+	for (int i = 0; i != g->entno; ++i) {
+		struct entity * const entities = g->ents;
 		struct entity * const ent = &entities[i];
 		if (EN_HUD_ID == i) {
 			ent->tag = EN_HUD;
@@ -106,10 +101,6 @@ void en_init(
 			ent->ymin = 0;
 			ent->xmax = (width_game_window - hud_width);
 			ent->ymax = (height_game_window - hud_height);
-			ent->blue  = EN_HUD_BLUE;
-			ent->green = EN_HUD_GREEN;
-			ent->red   = EN_HUD_RED;
-			ent->alpha = EN_HUD_ALPHA;
 			ent->len = hud_len;
 			ent->width = hud_width;
 			ent->height = hud_height;
@@ -118,18 +109,14 @@ void en_init(
 			ent->tag = EN_GAMER;
 			ent->invisibility = 0;
 			ent->ticks = 0;
-			ent->xpos = ((width_game_window >> 1) - (gamer_len >> 1));
-			ent->ypos = ((height_game_window >> 1) - (gamer_len >> 1));
+			ent->xpos = ((0.5f * width_game_window) - (gamer_len >> 1));
+			ent->ypos = ((0.5f * height_game_window) - (gamer_len >> 1));
 			ent->xvel = 0;
 			ent->yvel = 0;
 			ent->xmin = 0;
 			ent->ymin = 0;
 			ent->xmax = (width_game_window - gamer_len);
 			ent->ymax = (height_game_window - gamer_len);
-			ent->blue  = EN_GAMER_BLUE;
-			ent->green = EN_GAMER_GREEN;
-			ent->red   = EN_GAMER_RED;
-			ent->alpha = EN_GAMER_ALPHA;
 			ent->len = gamer_len;
 			ent->width = gamer_len;
 			ent->height = gamer_len;
@@ -150,10 +137,6 @@ void en_init(
 			ent->ymin = 0;
 			ent->xmax = (width_game_window - enemy_len);
 			ent->ymax = (height_game_window - enemy_len);
-			ent->blue  = EN_ENEMY_BLUE;
-			ent->green = EN_ENEMY_GREEN;
-			ent->red   = EN_ENEMY_RED;
-			ent->alpha = EN_ENEMY_ALPHA;
 			ent->len = enemy_len;
 			ent->width = enemy_len;
 			ent->height = enemy_len;
@@ -162,8 +145,9 @@ void en_init(
 		ent->xpos = en_clamp(ent->xpos, ent->xmin, ent->xmax);
 		ent->ypos = en_clamp(ent->ypos, ent->ymin, ent->ymax);
 	}
-	en_fix_overlap(entities, num_entities);
-	for (int i = 0; i != num_entities; ++i) {
+	en_fix_overlap(g->ents, g->entno);
+	for (int i = 0; i != g->entno; ++i) {
+		struct entity * const entities = g->ents;
 		struct entity * const ent = &entities[i];
 		ent->xpos = en_clamp(ent->xpos, 0, width_game_window);
 		ent->ypos = en_clamp(ent->ypos, 0, height_game_window);
@@ -213,30 +197,25 @@ static int en_check_collision(
 	}
 }
 
-void en_handle_collisions(
-		struct entity * const entities,
-		int const num_entities
-)
+void en_handle_collisions(struct game * const g)
 {
+	struct entity * const entities = g->ents;
 	struct entity * const hud = &entities[EN_HUD_ID];
 	struct entity * const gamer = &entities[EN_GAMER_ID];
-	for (int i = 1; i != num_entities; ++i) {
+	for (int i = 0; i != g->entno; ++i) {
 		struct entity const * const other = &entities[i];
-		if (EN_ENEMY == other->tag) {
-			struct entity const * const enemy = other;
-			if (en_check_collision(gamer, enemy)) {
-				if (!gamer->invisibility) {
-					hud->hp -= EN_COLLISION_DAMAGE;
-					hud->len -= EN_HUD_DAMAGE;
-					hud->width -= EN_HUD_DAMAGE;
-					gamer->hp -= EN_COLLISION_DAMAGE;
-					gamer->blue  = EN_GAMER_DAMAGED_BLUE;
-					gamer->green = EN_GAMER_DAMAGED_GREEN;
-					gamer->red   = EN_GAMER_DAMAGED_RED;
-					gamer->alpha = EN_GAMER_DAMAGED_ALPHA;
-					gamer->invisibility = 1;
-					gamer->ticks = 0;
-				}
+		if (EN_ENEMY != other->tag) {
+			continue;
+		}
+		struct entity const * const enemy = other;
+		if (en_check_collision(gamer, enemy)) {
+			if (!gamer->invisibility) {
+				hud->hp -= EN_COLLISION_DAMAGE;
+				hud->len -= EN_HUD_DAMAGE;
+				hud->width -= EN_HUD_DAMAGE;
+				gamer->hp -= EN_COLLISION_DAMAGE;
+				gamer->invisibility = 1;
+				gamer->ticks = 0;
 			}
 		}
 	}
@@ -245,13 +224,11 @@ void en_handle_collisions(
 	}
 }
 
-void en_update(
-		struct entity * const entities,
-		int const num_entities,
-		float const time_step
-)
+void en_update(struct game * const g)
 {
-	for (int i = 0; i != num_entities; ++i) {
+	float const time_step = GAME_PERIOD_SEC;
+	for (int i = 0; i != g->entno; ++i) {
+		struct entity * const entities = g->ents;
 		struct entity * const ent = &entities[i];
 		ent->xpos += (time_step * ent->xvel);
 		ent->ypos += (time_step * ent->yvel);
@@ -268,10 +245,6 @@ void en_update(
 		if (EN_GAMER == ent->tag) {
 			if (ent->invisibility) {
 				if (EN_COLLISION_IGNORE == ent->ticks) {
-					ent->blue  = EN_GAMER_BLUE;
-					ent->green = EN_GAMER_GREEN;
-					ent->red   = EN_GAMER_RED;
-					ent->alpha = EN_GAMER_ALPHA;
 					ent->invisibility = 0;
 					ent->ticks = 0;
 				} else {
