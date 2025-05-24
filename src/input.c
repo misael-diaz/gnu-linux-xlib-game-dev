@@ -2,11 +2,49 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
 #include "input.h"
 
-void in_handle_input(void)
+#define KBD_ESC XKeysymToKeycode(dpy, XK_Escape)
+#define KBD_LEFT XKeysymToKeycode(dpy, XK_Left)
+#define KBD_RIGHT XKeysymToKeycode(dpy, XK_Right)
+#define KBD_DOWN XKeysymToKeycode(dpy, XK_Down)
+#define KBD_UP XKeysymToKeycode(dpy, XK_Up)
+
+int in_handle_input(Display ** const display)
 {
-	return;
+	Display *dpy = *display;
+	int rc = 0;
+	XEvent ev = {};
+	while (XPending(*display)) {
+		XNextEvent(*display, &ev);
+		if (KeyPress == ev.type) {
+			if (KBD_ESC == ev.xkey.keycode) {
+				rc = 1;
+				break;
+			} else if (KBD_LEFT == ev.xkey.keycode) {
+				fprintf(stdout, "%s\n", "left-key pressed");
+			} else if (KBD_RIGHT == ev.xkey.keycode) {
+				fprintf(stdout, "%s\n", "right-key pressed");
+			} else if (KBD_DOWN == ev.xkey.keycode) {
+				fprintf(stdout, "%s\n", "down-key pressed");
+			} else if (KBD_UP == ev.xkey.keycode) {
+				fprintf(stdout, "%s\n", "up-key pressed");
+			}
+		} else if (KeyRelease == ev.type) {
+			if (KBD_LEFT == ev.xkey.keycode) {
+				fprintf(stdout, "%s\n", "left-key released");
+			} else if (KBD_RIGHT == ev.xkey.keycode) {
+				fprintf(stdout, "%s\n", "right-key released");
+			} else if (KBD_DOWN == ev.xkey.keycode) {
+				fprintf(stdout, "%s\n", "down-key released");
+			} else if (KBD_UP == ev.xkey.keycode) {
+				fprintf(stdout, "%s\n", "up-key released");
+			}
+		}
+	}
+	return rc;
 }
 
 /*

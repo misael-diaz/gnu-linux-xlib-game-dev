@@ -24,7 +24,7 @@ void vid_init_gw(
 	Screen *screen = DefaultScreenOfDisplay(*display);
 	XSetWindowAttributes attributes_window = {
 		.background_pixel = BlackPixel(*display, screeno),
-		.event_mask = ExposureMask
+		.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask
 
 	};
 	*window = XCreateWindow(

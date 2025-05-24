@@ -1,7 +1,9 @@
 #ifndef GNU_LINUX_XLIB_GAME_DEV_GAME_H
 #define GNU_LINUX_XLIB_GAME_DEV_GAME_H
 
-void g_loop(void);
+#include <X11/Xlib.h>
+
+void g_loop(Display ** const display);
 void g_pause(void);
 
 #endif

@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "input.h"
 #include "game.h"
 
-void g_loop(void)
+void g_loop(Display ** const display)
 {
-	return;
+	while (1) {
+		if (in_handle_input(display)) {
+			break;
+		}
+	}
 }
 
 void g_pause(void)
