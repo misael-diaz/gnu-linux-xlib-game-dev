@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <X11/Xutil.h>
 #include "video.h"
 
 void vid_init_gw(struct game * const g)
@@ -78,6 +79,14 @@ void vid_init_gw(struct game * const g)
 	g->gc = DefaultGC(g->display, g->screeno);
 	XSetGraphicsExposures(g->display, g->gc, True);
 	XStoreName(g->display, g->window, "GNU/Linux-Xlib-Game-Dev");
+	XSizeHints hints = {
+		.flags = PMinSize | PMaxSize,
+		.min_width = g->screen_width,
+		.max_width = g->screen_width,
+		.min_height = g->screen_height,
+		.max_height = g->screen_height,
+	};
+	XSetWMNormalHints(g->display, g->window, &hints);
 	XMapWindow(g->display, g->window);
 	XWindowEvent(g->display, g->window, ExposureMask, &ev);
 }
