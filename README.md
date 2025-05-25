@@ -33,3 +33,6 @@ watch the game on youtube.
 
 [![Watch the video](https://img.youtube.com/vi/MSf5etK1ojw/hqdefault.jpg)](https://www.youtube.com/watch?v=MSf5etK1ojw)
 
+At some point in the video we show the console output to show the game framerate and that
+there are no memory leaks. In fact the game was compiled without optimizations and it is
+running on top of valgrind which is performing memchecks.
