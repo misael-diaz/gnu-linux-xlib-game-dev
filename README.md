@@ -16,6 +16,7 @@ Code was either borrowed or adapted from the following GitHub repositories:
 - [Quake-III-Arena](https://github.com/id-Software/Quake-III-Arena)
 - [xlib-learning](https://github.com/Faison/xlib-learning)
 - [Xlib-demo](https://github.com/QMonkey/Xlib-demo)
+
 These were instrumental for the development of this game, and therefore, they deserve
 to be awknowledged.
 
