@@ -27,5 +27,6 @@ of the entities and pauses until the user presses a key on the console (we have 
 add key event handling code to the game).
 
 Playable game:
+
 [![Watch the video](https://img.youtube.com/vi/MSf5etK1ojw/hqdefault.jpg)](https://www.youtube.com/watch?v=MSf5etK1ojw)
 
