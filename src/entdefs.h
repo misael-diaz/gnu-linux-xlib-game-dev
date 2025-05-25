@@ -28,12 +28,12 @@
 
 /* velocity limits in pixels/sec */
 
-#define EN_GAMER_VEL 16
+#define EN_GAMER_VEL 1024
 #define EN_GAMER_XVEL EN_GAMER_VEL
 #define EN_GAMER_YVEL EN_GAMER_VEL
 
-#define EN_ENEMY_MINVEL 8
-#define EN_ENEMY_MAXVEL 16
+#define EN_ENEMY_MINVEL 512
+#define EN_ENEMY_MAXVEL 1024
 #define EN_ENEMY_VEL EN_ENEMY_MAXVEL
 
 /* entity RGB color codes */
