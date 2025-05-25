@@ -11,6 +11,13 @@ want to get the experience of writing code in an area outside of my field of exp
 We are using the [Xlib Programming Manual](https://tronche.com/gui/x/xlib/) as our main
 source of information for building this game and of course the GNU/Linux man pages.
 
+Code was either borrowed or adapted from the following GitHub repositories:
+- [Quake-III-Arena](https://github.com/id-Software/Quake-III-Arena)
+- [xlib-learning](https://github.com/Faison/xlib-learning)
+- [Xlib-demo](https://github.com/QMonkey/Xlib-demo)
+These were instrumental for the development of this game, and therefore, they deserve
+to be awknowledged.
+
 ## Progress
 
 Draws entities in the game window:
