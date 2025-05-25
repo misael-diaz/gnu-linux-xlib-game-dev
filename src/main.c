@@ -32,7 +32,6 @@ int main ()
 	vid_init_gw(&g);
 	vid_info_gw(&g);
 	en_init(&g);
-	vid_draw_gw(&g);
 	g_loop(&g);
 	g_pause(&g);
 	vid_close_gw(&g);

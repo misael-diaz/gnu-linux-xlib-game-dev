@@ -115,6 +115,7 @@ void vid_info_gw(struct game const * const g)
 
 void vid_draw_gw(struct game const * const g)
 {
+	XClearWindow(g->display, g->window);
 	for (int i = 0; i != g->entno; ++i) {
 		struct entity const * const entities = g->ents;
 		struct entity const * const ent = &entities[i];
