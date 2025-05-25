@@ -25,3 +25,7 @@ square, is centered, and the green rectangle displays the player health bar.
 At this point there's no player interactivity, the game only shows the initial position
 of the entities and pauses until the user presses a key on the console (we have yet to
 add key event handling code to the game).
+
+Playable game:
+[![Watch the video](https://img.youtube.com/vi/MSf5etK1ojw/hqdefault.jpg)](https://www.youtube.com/watch?v=MSf5etK1ojw)
+
