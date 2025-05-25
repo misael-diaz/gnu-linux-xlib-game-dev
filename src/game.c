@@ -29,6 +29,11 @@ void g_loop(struct game * const g)
 			break;
 		}
 		en_update(g);
+		en_handle_collisions(g);
+		if (0 == g->ents[EN_GAMER_ID].hp) {
+			fprintf(stdout, "%s\n", "g_loop: GAME OVER");
+			break;
+		}
 		++frame_stat_count;
 		clock_gettime(clockid, &time_frame_current);
 		sys_delay(clockid, &time_frame_current);

@@ -119,8 +119,13 @@ void vid_draw_gw(struct game const * const g)
 	for (int i = 0; i != g->entno; ++i) {
 		struct entity const * const entities = g->ents;
 		struct entity const * const ent = &entities[i];
+		struct entity const * const gamer = &g->ents[EN_GAMER_ID];
 		if (EN_GAMER == ent->tag) {
-			XSetForeground(g->display, g->gc, g->blue.pixel);
+			if (gamer->invisibility) {
+				XSetForeground(g->display, g->gc, g->gray.pixel);
+			} else {
+				XSetForeground(g->display, g->gc, g->blue.pixel);
+			}
 		} else if (EN_ENEMY == ent->tag) {
 			XSetForeground(g->display, g->gc, g->red.pixel);
 		} else if (EN_HUD == ent->tag) {
