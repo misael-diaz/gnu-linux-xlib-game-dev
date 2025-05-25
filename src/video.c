@@ -77,6 +77,7 @@ void vid_init_gw(struct game * const g)
 
 	g->gc = DefaultGC(g->display, g->screeno);
 	XSetGraphicsExposures(g->display, g->gc, True);
+	XStoreName(g->display, g->window, "GNU/Linux-Xlib-Game-Dev");
 	XMapWindow(g->display, g->window);
 	XWindowEvent(g->display, g->window, ExposureMask, &ev);
 }
