@@ -28,5 +28,8 @@ add key event handling code to the game).
 
 Playable game:
 
+Click the image below (or this [link](https://www.youtube.com/watch?v=MSf5etK1ojw) to
+watch the game on youtube.
+
 [![Watch the video](https://img.youtube.com/vi/MSf5etK1ojw/hqdefault.jpg)](https://www.youtube.com/watch?v=MSf5etK1ojw)
 
