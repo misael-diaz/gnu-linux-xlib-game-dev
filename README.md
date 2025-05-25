@@ -9,7 +9,8 @@ want to get the experience of writing code in an area outside of my field of exp
 ## References
 
 We are using the [Xlib Programming Manual](https://tronche.com/gui/x/xlib/) as our main
-source of information for building this game and of course the GNU/Linux man pages.
+source of information for building this game and of course the GNU/Linux
+[man pages](https://man7.org/linux/man-pages/).
 
 Code was either borrowed or adapted from the following GitHub repositories:
 - [Quake-III-Arena](https://github.com/id-Software/Quake-III-Arena)
