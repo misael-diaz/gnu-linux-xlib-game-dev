@@ -5,6 +5,11 @@
 #define GAME_PERIOD_SEC (1.0f / GAME_FRAMERATE_HZ)
 #define GAME_PERIOD_NS ((1.0e9f * (1.0f / GAME_FRAMERATE_HZ)))
 #define GAME_PERIOD_NS_I64 ((long) GAME_PERIOD_NS)
+#define GAME_SUPPORTED_PROTOCOLS_NUM 2
+#define GAME_PROTOCOL_ID 0
+#define GAME_DELETE_WINDOW_ID 1
+#define GAME_PROTOCOL_NM "WM_PROTOCOLS"
+#define GAME_DELETE_WINDOW_NM "WM_DELETE_WINDOW"
 _Static_assert(8 == sizeof(long), "UXLongIntSizeError");
 
 #endif

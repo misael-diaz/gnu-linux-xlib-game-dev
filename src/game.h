@@ -6,6 +6,8 @@
 
 struct game {
 	struct entity ents[EN_NUM_ENTITY_MAX];
+	char *supported_protocols[GAME_SUPPORTED_PROTOCOLS_NUM];
+	Atom protocols[GAME_SUPPORTED_PROTOCOLS_NUM];
 	Display *display;
 	Window window;
 	Screen *screen;
@@ -19,6 +21,7 @@ struct game {
 	int screen_width;
 	int screen_height;
 	int screen_depth;
+	int protocolno;
 	int screeno;
 	int entno;
 };

@@ -12,14 +12,49 @@
 #define KBD_DOWN XKeysymToKeycode(dpy, XK_Down)
 #define KBD_UP XKeysymToKeycode(dpy, XK_Up)
 
+// Window Manager Protocol Message Handling Resource:
+// https://tronche.com/gui/x/xlib/events/client-communication/client-message.html
 int in_handle_input(struct game * const g)
 {
 	int rc = 0;
 	XEvent ev = {};
 	Display *dpy = g->display;
+	char const * const msg_close_req = "in_handle_input: closing-game-window";
+	char const * const msg_unhandled_req = (
+			"in_handle_input: WARNING unhandled-request"
+	);
+	long const close_request_long = g->protocols[GAME_DELETE_WINDOW_ID];
+	short const close_request_short = g->protocols[GAME_DELETE_WINDOW_ID];
+	char const close_request_char = g->protocols[GAME_DELETE_WINDOW_ID];
 	while (XPending(g->display)) {
 		XNextEvent(g->display, &ev);
-		if (KeyPress == ev.type) {
+		if (ClientMessage == ev.type) {
+			if (g->protocols[GAME_PROTOCOL_ID] == ev.xclient.message_type) {
+				if (32 == ev.xclient.format) {
+					if (close_request_long == ev.xclient.data.l[0]) {
+						fprintf(stdout, "%s\n", msg_close_req);
+						rc = 1;
+						break;
+					}
+				} else if (16 == ev.xclient.format) {
+					if (close_request_short == ev.xclient.data.s[0]) {
+						fprintf(stdout, "%s\n", msg_close_req);
+						rc = 1;
+						break;
+					}
+				} else if (8 == ev.xclient.format) {
+					if (close_request_char == ev.xclient.data.b[0]) {
+						fprintf(stdout, "%s\n", msg_close_req);
+						rc = 1;
+						break;
+					}
+				} else {
+					fprintf(stdout, "%s\n", msg_unhandled_req);
+					rc = 0;
+					break;
+				}
+			}
+		} else if (KeyPress == ev.type) {
 			if (KBD_ESC == ev.xkey.keycode) {
 				rc = 1;
 				break;

@@ -87,6 +87,18 @@ void vid_init_gw(struct game * const g)
 		.max_height = g->screen_height,
 	};
 	XSetWMNormalHints(g->display, g->window, &hints);
+	Status stat = XInternAtoms(g->display,
+			g->supported_protocols,
+			g->protocolno,
+			True,
+			g->protocols
+	);
+	if (!stat) {
+		fprintf(stderr, "%s\n", "vid_info_gw: XIntermAtomsError");
+		vid_close_gw(g);
+		exit(EXIT_FAILURE);
+	}
+	XSetWMProtocols(g->display, g->window, g->protocols, g->protocolno);
 	XMapWindow(g->display, g->window);
 	XWindowEvent(g->display, g->window, ExposureMask, &ev);
 }

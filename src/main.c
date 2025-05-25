@@ -12,6 +12,11 @@ int main ()
 {
 	struct game g = {
 		.ents = {},
+		.supported_protocols = {
+			GAME_PROTOCOL_NM,
+			GAME_DELETE_WINDOW_NM,
+		},
+		.protocols = {},
 		.display = NULL,
 		.window = 0,
 		.screen = NULL,
@@ -25,6 +30,7 @@ int main ()
 		.screen_width = 0,
 		.screen_height = 0,
 		.screen_depth = 0,
+		.protocolno = GAME_SUPPORTED_PROTOCOLS_NUM,
 		.screeno = 0,
 		.entno = EN_NUM_ENTITY_MAX
 	};
